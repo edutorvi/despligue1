@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+
+
+{% block title %}Gráfico Estadístico{% endblock %}
+
+{% block extra_head %}
+	<!-- Incluir Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Incluir plugin de Chart.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.2.0/chartjs-plugin-datalabels.min.js"></script>
+    <!-- Incluir jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
+
+   <style>
+    /*aspect-ratio sirve para el responsivo*/
+    .contiene-chart {
+        max-width: 75%; /*no ocupe todo el ancho */       
+        aspect-ratio: 4 / 3; /*4=ancho 3=alto */
+        margin: auto; /*centrado*/
+    }    
+   </style> 
+
+{% endblock %}
+
+
+{% block content %}
+ 
+<h1>Gráfico Básico</h1>
+    <!-- botón que genera el gráfico -->
+    <button id="btn-generar">Generar Gráfico</button>    
+    <div class="contiene-chart">
+        <!-- Aquí se mostrará el gráfico -->
+        <canvas id="miGrafico"></canvas>
+    </div>    
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+        // JavaScript para manejar el gráfico
+        $(document).ready(function () {
+            let miGrafico = null;        
+        });
+
+        $('#btn-generar').click(function () {  //ojo esto es jquery
+              // Registrar el plugin
+           
+      
+            //datos para el gráfico en un objeto js
+            datos = {
+                type: 'bar',
+                data: {
+                    labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo'],//etiquetas para dataset
+                    datasets: [{
+                        label: 'Ejecución Presupuestal',
+                        data: [65, 59, 80, 81, 56],
+                        backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                    }]
+                },
+                options: {
+                    responsive: true,//ojo minúsculas en JS mayúsculas en python
+                    maintainAspectRatio: true,//para el responsivo
+                    plugins: {
+                        title: {
+                            display: true,//ojo minúsculas en JS mayúsculas en python
+                            text: 'Proyecto A - Ejecución Mensual'
+                        },
+                        legend: {
+                                position: 'bottom',
+                                display: true // Esto oculta la leyenda completamente
+                        },
+                        datalabels: {
+                                anchor: 'end',         // Posición en la parte superior de la barra
+                                align: 'top', 
+                                formatter: value => value, 
+                                color:
+                                    '#ff0000',
+                                font:
+                                    {
+                                        size: 10,
+                                        weight: 'bold'
+                                    }
+                        }
+                    }
+                },
+                plugins: [ChartDataLabels]
+               
+            }
+            // Crear nuevo gráfico
+            miGrafico = new Chart( document.getElementById('miGrafico'), datos);
+        });
+        
+    </script>
+
+
+{% endblock %}

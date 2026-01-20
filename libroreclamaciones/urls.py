@@ -1,8 +1,7 @@
-"""
-URL configuration for libroreclamaciones project.
+"""libroreclamaciones URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/4.2/topics/http/urls/
+    https://docs.djangoproject.com/en/3.2/topics/http/urls/
 Examples:
 Function views
     1. Add an import:  from my_app import views
@@ -17,6 +16,18 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from registro_reclamo.views import verhola 
+from registro_reclamo.views import inicio 
+from registro_reclamo.views import Verbase
+from registro_reclamo.views import VerGrafico
+
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('hola/', verhola, name='urlhola'),
+    path('', inicio, name='urlinicio'),
+    path('base/ver', Verbase, name='base'),
+    path('grafico/ver/', VerGrafico, name='grafico'),    
+
 ]
